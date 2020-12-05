@@ -1,11 +1,10 @@
 package main
 
 import (
-	"bufio"
 	"flag"
 	"fmt"
+	"github.com/Piszmog/adventofcode/utils"
 	"log"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -13,7 +12,31 @@ import (
 func main() {
 	passwordsFile := flag.String("f", "passwords.txt", "File containing the passwords")
 
-	passwords, err := readPasswords(*passwordsFile)
+	var passwords []password
+	err := utils.ReadTextFile(*passwordsFile, func(line string, rowNumber int) error {
+		lineParts := strings.Split(line, " ")
+		// get the min/max
+		minMax := strings.Split(lineParts[0], "-")
+		min, err := strconv.Atoi(minMax[0])
+		if err != nil {
+			return fmt.Errorf("failed to convert min %s: %w", minMax[0], err)
+		}
+		max, err := strconv.Atoi(minMax[1])
+		if err != nil {
+			return fmt.Errorf("failed to convert max %s: %w", minMax[1], err)
+		}
+		// get the letter
+		letter := lineParts[1][:1]
+		// get the value
+		value := lineParts[2]
+		passwords = append(passwords, password{
+			min:    min,
+			max:    max,
+			letter: letter,
+			value:  value,
+		})
+		return nil
+	})
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -32,45 +55,6 @@ type password struct {
 	max    int
 	letter string
 	value  string
-}
-
-func readPasswords(expenseFile string) ([]password, error) {
-	file, err := os.Open(expenseFile)
-	if err != nil {
-		fmt.Println(err)
-		return nil, fmt.Errorf("failed to open file %s: %w", expenseFile, err)
-	}
-	defer file.Close()
-
-	var passwords []password
-	scanner := bufio.NewScanner(file)
-	rowNumber := 0
-	for scanner.Scan() {
-		line := scanner.Text()
-		lineParts := strings.Split(line, " ")
-		// get the min/max
-		minMax := strings.Split(lineParts[0], "-")
-		min, err := strconv.Atoi(minMax[0])
-		if err != nil {
-			return nil, fmt.Errorf("failed to convert min %s: %w", minMax[0], err)
-		}
-		max, err := strconv.Atoi(minMax[1])
-		if err != nil {
-			return nil, fmt.Errorf("failed to convert max %s: %w", minMax[1], err)
-		}
-		// get the letter
-		letter := lineParts[1][:1]
-		// get the value
-		value := lineParts[2]
-		passwords = append(passwords, password{
-			min:    min,
-			max:    max,
-			letter: letter,
-			value:  value,
-		})
-		rowNumber++
-	}
-	return passwords, err
 }
 
 func getValidPasswordsPart1(passwords []password) []password {
