@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-type ConverterFunc func(line string, rowNumber int) error
+type ConverterFunc func(line string) error
 
 func ReadTextFile(fileName string, converterFunc ConverterFunc) error {
 	file, err := os.Open(fileName)
@@ -20,8 +20,8 @@ func ReadTextFile(fileName string, converterFunc ConverterFunc) error {
 	rowNumber := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		if err = converterFunc(line, rowNumber); err != nil {
-			return err
+		if err = converterFunc(line); err != nil {
+			return fmt.Errorf("failed on line %d: %w", rowNumber, err)
 		}
 		rowNumber++
 	}

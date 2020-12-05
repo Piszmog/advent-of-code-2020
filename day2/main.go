@@ -13,7 +13,7 @@ func main() {
 	passwordsFile := flag.String("f", "passwords.txt", "File containing the passwords")
 
 	var passwords []password
-	err := utils.ReadTextFile(*passwordsFile, func(line string, rowNumber int) error {
+	err := utils.ReadTextFile(*passwordsFile, func(line string) error {
 		lineParts := strings.Split(line, " ")
 		// get the min/max
 		minMax := strings.Split(lineParts[0], "-")

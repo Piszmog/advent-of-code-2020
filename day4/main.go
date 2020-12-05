@@ -52,7 +52,7 @@ type passport struct {
 func readPassports(passportsFile *string) ([]passport, error) {
 	var passports []passport
 	currentPassport := passport{}
-	err := utils.ReadTextFile(*passportsFile, func(line string, rowNumber int) error {
+	err := utils.ReadTextFile(*passportsFile, func(line string) error {
 		// on to a new record, save the passport off to the slice
 		if len(line) == 0 {
 			passports = append(passports, clonePassport(currentPassport))

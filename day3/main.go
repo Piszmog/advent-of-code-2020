@@ -21,7 +21,7 @@ func main() {
 	terrainFile := flag.String("f", "terrain.txt", "File containing the terrain")
 
 	var terrain [][]string
-	err := utils.ReadTextFile(*terrainFile, func(line string, rowNumber int) error {
+	err := utils.ReadTextFile(*terrainFile, func(line string) error {
 		terrain = append(terrain, strings.Split(line, ""))
 		return nil
 	})
