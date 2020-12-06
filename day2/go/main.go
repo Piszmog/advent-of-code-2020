@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	passwordsFile := flag.String("f", "passwords.txt", "File containing the passwords")
+	passwordsFile := flag.String("f", "../passwords.txt", "File containing the passwords")
 
 	var passwords []password
 	err := utils.ReadTextFile(*passwordsFile, func(line string) error {

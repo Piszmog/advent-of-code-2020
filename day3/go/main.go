@@ -18,7 +18,7 @@ type slope struct {
 }
 
 func main() {
-	terrainFile := flag.String("f", "terrain.txt", "File containing the terrain")
+	terrainFile := flag.String("f", "../terrain.txt", "File containing the terrain")
 
 	var terrain [][]string
 	err := utils.ReadTextFile(*terrainFile, func(line string) error {

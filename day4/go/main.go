@@ -22,7 +22,7 @@ const (
 )
 
 func main() {
-	passportsFile := flag.String("f", "passports.txt", "File containing the terrain")
+	passportsFile := flag.String("f", "../passports.txt", "File containing the terrain")
 
 	passports, err := readPassports(passportsFile)
 	if err != nil {

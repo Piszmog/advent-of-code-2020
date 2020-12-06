@@ -16,7 +16,7 @@ const (
 )
 
 func main() {
-	expenseFile := flag.String("f", "expenses.csv", "File containing the expenses")
+	expenseFile := flag.String("f", "../expenses.csv", "File containing the expenses")
 
 	expenses, err := readExpenses(*expenseFile)
 	if err != nil {

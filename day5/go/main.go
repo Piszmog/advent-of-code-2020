@@ -29,7 +29,7 @@ func (p boardingPasses) Swap(i, j int) {
 }
 
 func main() {
-	inputFile := flag.String("f", "input.txt", "File containing the input")
+	inputFile := flag.String("f", "../input.txt", "File containing the input")
 
 	var passes boardingPasses
 	err := utils.ReadTextFile(*inputFile, func(line string) error {

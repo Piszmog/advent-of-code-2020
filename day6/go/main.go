@@ -21,7 +21,7 @@ type void struct{}
 var member void
 
 func main() {
-	inputFile := flag.String("f", "input.txt", "File containing the input")
+	inputFile := flag.String("f", "../input.txt", "File containing the input")
 
 	groups, err := getGroups(inputFile)
 	if err != nil {
