@@ -7,4 +7,4 @@ require (
 	github.com/stretchr/testify v1.6.1
 )
 
-replace github.com/Piszmog/adventofcode/utils => ./../../utils
+replace github.com/Piszmog/adventofcode/utils => ./../../utils/go
