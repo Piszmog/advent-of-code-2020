@@ -1,8 +1,19 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
 fn main() {
-    let passwords = get_passwords();
+    let file_name = "../passwords.txt".to_string();
+    let map_function = |line: String| {
+        let parts: Vec<&str> = line.split(" ").collect();
+        let min_max: Vec<&str> = parts[0].split("-").collect();
+        let min = min_max[0].parse::<i32>().unwrap();
+        let max = min_max[1].parse::<i32>().unwrap();
+        let letter = parts[1].trim_end_matches(":").to_string();
+        Some(Password {
+            min,
+            max,
+            letter,
+            value: parts[2].to_string(),
+        })
+    };
+    let passwords = file_utils::get_input(file_name, map_function);
 
     // part 1
     let valid_password_count = get_valid_passwords_count_1(&passwords);
@@ -18,27 +29,6 @@ struct Password {
     max: i32,
     letter: String,
     value: String,
-}
-
-fn get_passwords() -> Vec<Password> {
-    let file = File::open("../passwords.txt").expect("could not find file");
-    let reader = BufReader::new(file);
-    reader.lines()
-        .map(|line| line.expect("could not read line"))
-        .map(|line| {
-            let parts: Vec<&str> = line.split(" ").collect();
-            let min_max: Vec<&str> = parts[0].split("-").collect();
-            let min = min_max[0].parse::<i32>().unwrap();
-            let max = min_max[1].parse::<i32>().unwrap();
-            let letter = parts[1].trim_end_matches(":").to_string();
-            Password {
-                min,
-                max,
-                letter,
-                value: parts[2].to_string(),
-            }
-        })
-        .collect()
 }
 
 fn get_valid_passwords_count_1(passwords: &Vec<Password>) -> i32 {

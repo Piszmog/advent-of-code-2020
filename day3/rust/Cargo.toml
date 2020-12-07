@@ -5,3 +5,4 @@ authors = ["Piszmog <piszmogcode@gmail.com>"]
 edition = "2018"
 
 [dependencies]
+file_utils = { path = "../../utils/rust/file_utils" }

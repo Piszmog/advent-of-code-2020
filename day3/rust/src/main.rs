@@ -1,8 +1,7 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
 fn main() {
-    let terrain = get_terrain();
+    let file_name = "../terrain.txt".to_string();
+    let map_function = |line: String| Some(line.split("").map(String::from).collect());
+    let terrain = file_utils::get_input(file_name, map_function);
 
     // part 1
     let encounter1 = get_encounters(&terrain, Slope { down: 1, right: 1 });
@@ -15,15 +14,6 @@ fn main() {
     let encounter5 = get_encounters(&terrain, Slope { down: 2, right: 1 });
     let result = encounter1.trees * encounter2.trees * encounter3.trees * encounter4.trees * encounter5.trees;
     println!("Part 2: Result: {}", result)
-}
-
-fn get_terrain() -> Vec<Vec<String>> {
-    let file = File::open("../terrain.txt").expect("could not find file");
-    let reader = BufReader::new(file);
-    reader.lines()
-        .map(|line| line.expect("could not read line"))
-        .map(|line| line.split("").map(String::from).collect())
-        .collect()
 }
 
 struct Slope {

@@ -1,8 +1,7 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader};
-
 fn main() {
-    let expenses = get_expenses();
+    let file_name = "../expenses.csv".to_string();
+    let map_function = |line: String| Some(line.parse().unwrap());
+    let expenses = file_utils::get_input(file_name, map_function);
 
     // part 1
     'outer1: for (i, expense1) in expenses.iter().enumerate() {
@@ -33,15 +32,6 @@ fn main() {
             }
         }
     }
-}
-
-fn get_expenses() -> Vec<i32> {
-    let file = File::open("../expenses.csv").expect("could not find file");
-    let reader = BufReader::new(file);
-    reader.lines()
-        .map(|line| line.expect("could not read line"))
-        .map(|line| line.parse().unwrap())
-        .collect()
 }
 
 const EXPECTED: i32 = 2020;
