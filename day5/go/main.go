@@ -65,6 +65,7 @@ func main() {
 		// if the next seat is not +1, then +1 from current pass is the missing seat
 		if pass.seatId != passes[i+1].seatId-1 {
 			missingSeatId = pass.seatId + 1
+			break
 		}
 	}
 	fmt.Printf("Part 2: Missing seat: %d\n", missingSeatId)
